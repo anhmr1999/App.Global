@@ -1,0 +1,102 @@
+﻿@page
+@using App.Global.Localization
+@using Microsoft.Extensions.Localization
+@model App.Global.Web.Pages.Mails.EmailTemplateModel
+@inject IStringLocalizer<GlobalResource> L
+
+@section styles{
+<abp-style src="/styles/emails/EmailTemplate.css" />
+}
+
+@section scripts
+{
+<abp-script src="/ckeditor/ckeditor.js" />
+<abp-script src="/scripts/emails/EmailTemplate.js" />
+}
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_9">
+                <div class="container">
+                    <abp-row>
+                        <abp-column size-md="_5">
+                             <abp-card-title>@L["EmailTemplate"]</abp-card-title>
+                        </abp-column>
+                        <abp-column size-md="_7">
+                             <input name="filter" class="form-control filter" placeholder="Filter..."/>
+                        </abp-column>
+                    </abp-row>
+                </div>
+            </abp-column>
+            <abp-column size-md="_3" class="text-end">
+                <abp-button id="createButton" text="@L["add"]" icon="plus" button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="EmailTemplate"></abp-table>
+    </abp-card-body>
+</abp-card>
+
+<div class="CoUbackgroup">
+    <div class="content">
+        <div class="template-form">
+            <form action="/">
+                <div class="template-form-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6"><h4 id="form-label-header"></h4></div>
+                            <div class="col-6 button-content">
+                                <abp-button text="@L["save"]" id="template-form-save" size="Small" icon="ravelry" button-type="Primary" />
+                                <abp-button text="@L["close"]" id="template-form-close" size="Small" icon="times" button-type="Outline_Danger" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-form-body">
+                    <input type="hidden" name="id" />
+                    <div class="container">
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label for="templateName">Name:</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input name="templateName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label for="defaultTitle">Title:</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input name="defaultTitle" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-4">
+                                <input name="isActive" type="checkbox" />
+                                <label for="isActive">Allow using</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input name="allowChange" type="checkbox" />
+                                <label for="allowChange">Allow change</label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label for="defaultTemplate">Template:</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="toolbar-container"></div>
+                                <div id="defaultTemplate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

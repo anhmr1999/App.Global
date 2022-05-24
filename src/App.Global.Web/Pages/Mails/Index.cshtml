@@ -1,0 +1,36 @@
+﻿@page
+@using App.Global.Localization
+@using Microsoft.Extensions.Localization
+@model App.Global.Web.Pages.Mails.IndexModel
+@inject IStringLocalizer<GlobalResource> L
+
+@section scripts
+{
+<abp-script src="/scripts/emails/Index.js" />
+}
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_8">
+                <div class="container">
+                    <abp-row>
+                        <abp-column size="_4">
+                            <abp-card-title>@L["sericeSendMail"]</abp-card-title>
+                        </abp-column>
+                        <abp-column size="_8">
+                            <input name="filter" class="filter form-control" placeholder="Filter..."/>
+                        </abp-column>
+                    </abp-row>
+                </div>
+            </abp-column>
+            <abp-column size-md="_4" class="text-end">
+                <abp-button id="EmailConfig" text="@L["EmailConfig"]" icon="wrench" button-type="Outline_Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <div class="container">
+            <abp-table striped-rows="true" id="Email-Service"></abp-table>
+        </div>
+    </abp-card-body>
+</abp-card>

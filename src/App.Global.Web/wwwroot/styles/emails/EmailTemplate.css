@@ -1,0 +1,87 @@
+﻿.template-form::-webkit-scrollbar, #defaultTemplate::-webkit-scrollbar {
+    width: 5px;
+    height: 0;
+}
+
+/* Track */
+.template-form::-webkit-scrollbar-track, #defaultTemplate::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+.template-form::-webkit-scrollbar-thumb, #defaultTemplate::-webkit-scrollbar-thumb {
+    background: red;
+    border-radius: 10px;
+}
+
+    /* Handle on hover */
+    .template-form::-webkit-scrollbar-thumb:hover, #defaultTemplate::-webkit-scrollbar-thumb:hover {
+        background: #b30000;
+    }
+
+@-webkit-keyframes run {
+    0% {
+        left: -100%;
+    }
+
+    50% {
+        right: -50%;
+    }
+
+    100% {
+        right: 0;
+    }
+}
+
+.CoUbackgroup {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    background: #00000050;
+}
+
+    .CoUbackgroup .content {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .CoUbackgroup .content > .template-form {
+            position: absolute;
+            right: -50%;
+            top: 80px;
+            background: #FFFFFF;
+            opacity: 1;
+            width: 50%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 10px 0 0 10px;
+            transition: all 1s ease-in-out;
+        }
+            .CoUbackgroup .content > .template-form .form-group{
+                margin-bottom: 10px;
+            }
+
+            .CoUbackgroup .content > .template-form .template-form-header {
+                padding: 5px 0;
+            }
+
+                .CoUbackgroup .content > .template-form .template-form-header .button-content {
+                    text-align: right;
+                }
+
+            .CoUbackgroup .content > .template-form .template-form-body {
+                padding: 10px 0;
+            }
+
+#defaultTemplate {
+    border: 1px solid;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+}

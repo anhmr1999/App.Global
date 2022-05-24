@@ -1,0 +1,28 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    //Menu
+    "Menu:Home": "Trang chủ",
+    "Menu:Email": "Email",
+    "Menu:EmailTemplate": "Mẫu Email",
+
+    //Common
+    "index": "STT",
+    "content": "Nội dung",
+    "status": "Trạng thái",
+    "action": "Hành động",
+
+    //Email
+    "emailConfig": "Cấu hình email",
+    "EmailTemplate": "Mẫu email",
+    "sericeSendMail": "Dịch vụ gửi email",
+    "systemEmail": "Email Hệ thống",
+    "receiver": "Người nhận",
+    "template": "Mẫu",
+    "created": "Vừa tạo",
+    "processing": "Đang gửi",
+    "done": "Gửi thành công",
+    "fail": "Lỗi",
+    "reSended": "Đang gửi lại"
+  }
+}
