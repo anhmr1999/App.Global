@@ -47,15 +47,15 @@
                     sortable: false
                 },
                 {
-                    title: l('active'),
+                    title: l('allowUsing'),
                     data: "isActive",
                     searchable: false,
                     sortable: false,
                     render: function (isActive) {
                         if (isActive) {
-                            return `<input type="checkbox" disabled checked/>`;
+                            return `<span class="btn btn-status btn-success" disable>can use</span>`;
                         }
-                        return `<input type="checkbox" disabled />`;
+                        return `<span class="btn btn-status btn-danger" disable>can't use</span>`;
                     }
                 },
                 {
@@ -65,9 +65,9 @@
                     sortable: false,
                     render: function (allowChange) {
                         if (allowChange) {
-                            return `<input type="checkbox" disabled checked/>`;
+                            return `<span class="btn btn-status btn-success" disable>can change</span>`;
                         }
-                        return `<input type="checkbox" disabled />`;
+                        return `<span class="btn btn-status btn-danger" disable>can't change</span>`;
                     }
                 },
                 {

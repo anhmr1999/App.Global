@@ -2,7 +2,7 @@
     var l = abp.localization.getResource('Global');
     var index = 0;
 
-    var configModal = new abp.ModalManager(abp.appPath + 'Mails/EmailConfigModal');
+    var configModal = new abp.ModalManager(abp.appPath + 'Mails/ConfigModal');
 
     var dataTable = $('#Email-Service').DataTable(
         abp.libs.datatables.normalizeConfiguration({

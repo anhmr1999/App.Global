@@ -2,27 +2,34 @@
   "culture": "en",
   "texts": {
     //Menu
-    "Menu:Home": "Trang chủ",
+    "Menu:Home": "Home",
     "Menu:Email": "Email",
-    "Menu:EmailTemplate": "Mẫu Email",
+    "Menu:EmailTemplate": "Email Template",
 
     //Common
     "index": "STT",
-    "content": "Nội dung",
-    "status": "Trạng thái",
-    "action": "Hành động",
+    "content": "Content",
+    "status": "Status",
+    "action": "Action",
+    "name": "Name",
+    "title": "Title",
+    "add": " Add",
+    "change": " Change",
+    "delete": " Delete",
 
     //Email
-    "emailConfig": "Cấu hình email",
-    "EmailTemplate": "Mẫu email",
-    "sericeSendMail": "Dịch vụ gửi email",
-    "systemEmail": "Email Hệ thống",
-    "receiver": "Người nhận",
-    "template": "Mẫu",
-    "created": "Vừa tạo",
-    "processing": "Đang gửi",
-    "done": "Gửi thành công",
-    "fail": "Lỗi",
-    "reSended": "Đang gửi lại"
+    "emailConfig": "Email Config",
+    "EmailTemplate": "Email Template",
+    "sericeSendMail": "Sent Email List",
+    "systemEmail": "System Email",
+    "allowChange": "Allow Change",
+    "allowUsing": "Allow Using",
+    "receiver": "Receiver",
+    "template": "Template",
+    "created": "Created",
+    "processing": "Processing",
+    "done": "Done",
+    "fail": "Fail",
+    "reSended": "Resending"
   }
 }

@@ -12,7 +12,7 @@ namespace App.Global.AppServiceDefines.Emails
 {
     public interface IEmailConfigAppService : IApplicationService
     {
-        Task<IEnumerable<EmailConfigDto>> GetListAsync();
+        Task<ICollection<EmailConfigDto>> GetListAsync();
         Task<IActionResult> UpdateAsync(EmailConfigRequestDto input);
     }
 }

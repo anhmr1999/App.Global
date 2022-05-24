@@ -20,19 +20,18 @@
         background: #b30000;
     }
 
-@-webkit-keyframes run {
-    0% {
-        left: -100%;
-    }
-
-    50% {
-        right: -50%;
-    }
-
-    100% {
-        right: 0;
-    }
+.btn-status {
+    border-radius: 10px;
+    box-shadow: none !important;
+    text-align: center;
+    width: 140px;
+    padding: 0 5px 5px 5px;
+    line-height: 1;
 }
+
+    .btn-status:hover {
+        cursor: unset;
+    }
 
 .CoUbackgroup {
     display: none;
@@ -63,7 +62,8 @@
             border-radius: 10px 0 0 10px;
             transition: all 1s ease-in-out;
         }
-            .CoUbackgroup .content > .template-form .form-group{
+
+            .CoUbackgroup .content > .template-form .form-group {
                 margin-bottom: 10px;
             }
 

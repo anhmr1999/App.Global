@@ -24,7 +24,7 @@ namespace App.Global.AppServices.Emails
             _configRepository = configRepository;
         }
 
-        public async Task<IEnumerable<EmailConfigDto>> GetListAsync()
+        public async Task<ICollection<EmailConfigDto>> GetListAsync()
         {
             var lst = await _configRepository.GetListAsync();
             return ObjectMapper.Map<List<EmailConfig>, List<EmailConfigDto>>(lst);
