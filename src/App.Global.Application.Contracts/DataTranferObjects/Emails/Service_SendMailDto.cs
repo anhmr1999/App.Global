@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Data;
 
 namespace App.Global.DataTranferObjects.Emails
 {
@@ -12,7 +13,9 @@ namespace App.Global.DataTranferObjects.Emails
         public string ReceiverEmail { get; set; }
         public int NumberOfTimeSend { get; set; }
         public int Status { get; set; }
+        public ExtraPropertyDictionary ExtraProperties { get; set; }
         public Guid? TemplateId { get; set; }
+        public string CreateUserName { get; set; }
         public EmailTemplateDto TemplateDto { get; set; }
     }
 }

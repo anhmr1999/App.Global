@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
@@ -12,7 +12,6 @@ namespace App.Global.Commons.Helpers
     public class FileHelper : ITransientDependency
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
         public FileHelper(IWebHostEnvironment webHostEnvironment)
         {
@@ -20,31 +19,53 @@ namespace App.Global.Commons.Helpers
         }
 
 
-        public async Task<string> SaveFileAsync(IFormFile file)
+        public async Task<string> SaveFileAsync(IFormFile file, string filePath = "")
         {
-            var fileName = Guid.NewGuid() + file.FileName;
-            var fileLocation = Path.Combine(_webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME, fileName);
-            if (!Directory.Exists(fileLocation))
-            {
-                Directory.CreateDirectory(fileLocation);
-            }
+            if (string.IsNullOrEmpty(filePath))
+                filePath = GetFilePath(file.FileName);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            using (var stream = new FileStream(Path.Combine(_webHostEnvironment.WebRootPath, filePath), FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-            var linkfile = $"/{USER_CONTENT_FOLDER_NAME}/{fileName}";
-            return linkfile;
+            return filePath;
         }
 
-        public async Task DeleteFileAsync(string fileName)
+        public async Task DeleteFileAsync(string filePath)
         {
-            var filePath = $@"{_webHostEnvironment.WebRootPath}{fileName}";
             if (File.Exists(filePath))
             {
                 await Task.Run(() => File.Delete(filePath));
             }
+        }
+
+        public byte[] GetFileAsync(string filePath)
+        {
+            if (File.Exists(filePath))
+                return File.ReadAllBytes(filePath);
+
+            return null;
+        }
+
+        public static string GetFilePath(string fileName, string folderContent = "")
+        {
+            if (fileName.ToLower().Contains("content"))
+                return fileName.Replace("content/", string.Empty);
+            if (string.IsNullOrWhiteSpace(folderContent))
+                folderContent = "default";
+            return Path.Combine(folderContent, $"{Guid.NewGuid()}-{fileName}");
+        }
+
+        public static string CheckFileImage(IFormFile file)
+        {
+            var imagesExtensions = new List<string>()
+                { ".jpg", ".png", ".svg", ".gif" };
+            var extention = Path.GetExtension(file.FileName);
+            if (!imagesExtensions.Any(x => x.Contains(extention)))
+                return "Uploaded file is incorrect!";
+            if (file.Length < GlobalConsts.imgMinSize || file.Length > GlobalConsts.imgMaxSize)
+                return "Upload files must be between 5Kb and 3Mb!";
+            return string.Empty;
         }
     }
 }

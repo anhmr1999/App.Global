@@ -21,7 +21,8 @@
     "emailConfig": "Email Config",
     "EmailTemplate": "Email Template",
     "sericeSendMail": "Sent Email List",
-    "systemEmail": "System Email",
+    "typeEmail": "Type Email",
+    "viewEmail": "View Email",
     "allowChange": "Allow Change",
     "allowUsing": "Allow Using",
     "receiver": "Receiver",
@@ -30,6 +31,14 @@
     "processing": "Processing",
     "done": "Done",
     "fail": "Fail",
-    "reSended": "Resending"
+    "reSended": "Resending",
+
+    //EmailConfig
+    "SmtpHost": "Smtp Host:",
+    "SmtpPort": "Smtp Port:",
+    "SmtpUserName": "Smtp UserName:",
+    "SmtpPassword": "Smtp Password:",
+    "SmtpEnableSsl": "Smtp Enable Ssl",
+    "DefaultTitle": "Default Title Email:"
   }
 }

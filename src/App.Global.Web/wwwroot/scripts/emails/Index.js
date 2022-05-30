@@ -1,8 +1,8 @@
 ﻿$(function () {
     var l = abp.localization.getResource('Global');
-    var index = 0;
 
     var configModal = new abp.ModalManager(abp.appPath + 'Mails/ConfigModal');
+    var viewModal = new abp.ModalManager(abp.appPath + 'Mails/EmailModal');
 
     var dataTable = $('#Email-Service').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -12,33 +12,26 @@
             searching: false,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(app.global.appServices.emails.email.getList,
-                {}
+                function () {
+                    return { filter: $('.filter').val() };
+                }
             ),
             columnDefs: [
                 {
-                    title: l('index'),
-                    data: null,
+                    title: l('typeEmail'),
+                    data: "systemEmail",
                     searchable: false,
                     sortable: false,
-                    render: function () {
-                        return ++index;
-                    }
-                },
-                {
-                    title: l('systemEmail'),
-                    data: "code",
-                    searchable: false,
-                    sortable: false,
-                    render: function (code) {
-                        if (code) {
-                            return `<input type="checkbox" disabled checked/>`;
+                    render: function (systemEmail) {
+                        if (systemEmail) {
+                            return `<span class="status processing">System</span>`;
                         }
-                        return `<input type="checkbox" disabled />`;
+                        return ``;
                     }
                 },
                 {
                     title: l('receiver'),
-                    data: "description",
+                    data: "receiverEmail",
                     searchable: false,
                     sortable: false
                 },
@@ -64,12 +57,32 @@
                     }
                 },
                 {
+                    title: l('title'),
+                    data: 'templateDto',
+                    searchable: false,
+                    sortable: false,
+                    render: function (templateDto) {
+                        if (templateDto != null) {
+                            return templateDto.defaultTitle;
+                        }
+                        return 'Global App Email...';
+                    }
+                },
+                {
                     title: l('action'),
                     data: null,
                     searchable: false,
                     sortable: false,
                     render: function (data) {
-                        return ``;
+                        var html = `<button data-id="` + data.id + `" class="btn btn-outline-success btn-sm view"><i class="fa fa-eye"></i></button>`;
+                        if (data.status == 3)
+                            html += `<button data-id="` + data.id + `" class="btn btn-outline-primary btn-sm resend" style="margin-left: 10px; position: relative;">
+                                <i class="fa fa-envelope"></i><span class="timeofsend">` + data.numberOfTimeSend + `</span></button>`;
+                        else
+                            html += `<button data-id="` + data.id + `" class="btn btn-outline-primary btn-sm" disabled style="margin-left: 10px; position: relative;">
+                                <i class="fa fa-envelope"></i><span class="timeofsend">` + data.numberOfTimeSend + `</span></button>`;
+
+                        return html;
                     }
                 }
             ]
@@ -78,19 +91,19 @@
 
     function getStatus(status) {
         if (status == 0) {
-            return `<div class="status created">` + l('created') + `</div>`;
+            return `<span class="status created">` + l('created') + `</span>`;
         }
         if (status == 1) {
-            return `<div class="status processing">` + l('processing') + `</div>`;
+            return `<span class="status processing">` + l('processing') + `</span>`;
         }
         if (status == 2) {
-            return `<div class="status done">` + l('done') + `</div>`;
+            return `<span class="status done">` + l('done') + `</span>`;
         }
         if (status == 3) {
-            return `<div class="status fail">` + l('fail') + `</div>`;
+            return `<span class="status fail">` + l('fail') + `</span>`;
         }
         if (status == 4) {
-            return `<div class="status reSended">` + l('reSended') + `</div>`;
+            return `<span class="status reSended">` + l('reSended') + `</span>`;
         }
         return "";
     }
@@ -98,5 +111,26 @@
     $('#EmailConfig').on('click', function (e) {
         e.preventDefault();
         configModal.open();
+    });
+    $('.filter').on('change', function () {
+        dataTable.ajax.reload();
+    });
+    $(document).on('click', '.resend', function (e) {
+        e.preventDefault();
+        abp.ui.setBusy();
+        var id = $(this).data('id');
+        app.global.appServices.emails.email.reSend(id)
+            .done(function (res) {
+                console.log(res);
+            })
+            .always(function () {
+                dataTable.ajax.reload();
+                abp.ui.clearBusy();
+            });
+    });
+    $(document).on('click', '.view', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        viewModal.open({ id: id });
     });
 });

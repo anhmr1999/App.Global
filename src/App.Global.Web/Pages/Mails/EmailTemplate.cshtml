@@ -60,8 +60,20 @@
                             <div class="col-md-2">
                                 <label for="templateName">Name:</label>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-5">
                                 <input name="templateName" class="form-control" />
+                            </div>
+                            <div class="col-md-5" style="padding-top: 7px;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input name="isActive" type="checkbox" />
+                                        <label for="isActive">Allow using</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input name="allowChange" type="checkbox" />
+                                        <label for="allowChange">Allow change</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -74,23 +86,20 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                                <input name="isActive" type="checkbox" />
-                                <label for="isActive">Allow using</label>
-                            </div>
-                            <div class="col-md-4">
-                                <input name="allowChange" type="checkbox" />
-                                <label for="allowChange">Allow change</label>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-2">
                                 <label for="defaultTemplate">Template:</label>
                             </div>
                             <div class="col-md-12">
                                 <div id="toolbar-container"></div>
                                 <div id="defaultTemplate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label for="params">Params: <button class="btn btn-sm btn-outline-info addParam"><i class="fa fa-plus"></i></button></label>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row" id="params">
                                 </div>
                             </div>
                         </div>

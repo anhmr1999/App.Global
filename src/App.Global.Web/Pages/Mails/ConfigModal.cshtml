@@ -8,24 +8,34 @@
     Layout = null;
 }
 <abp-modal>
-    <abp-modal-header title="@L["emailConfig"]"></abp-modal-header>
-    <abp-modal-body>
-        <div class="container">
-            @foreach (var item in Model.Configs)
-            {
-                <div class="form-group" style="margin-bottom: 10px">
-                    <label for="@item.Code">@item.Description</label>
-                    @if (item.Value == "true" || item.Value == "false")
-                    {
-                        <input type="checkbox" name="@item.Code" @(item.Value=="true" ? "checked" : "") />
-                    }
-                    else
-                    {
-                        <input type="text" name="@item.Code" value="@item.Value" class="form-control" />
-                    }
-                </div>
-            }
-        </div>
-    </abp-modal-body>
-    <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+   <form action="/Mails/ConfigModal" method="post">
+        <abp-modal-header title="@L["emailConfig"]"></abp-modal-header>
+        <abp-modal-body>
+            <div class="mb-3">
+                <label class="form-label" for="Settings_SmtpHost">@L["SmtpHost"]</label>
+                <input type="text" id="Settings_SmtpHost" name="Settings.SmtpHost" value="@Model.Settings.SmtpHost" class="form-control valid" aria-invalid="false"><span class="text-danger field-validation-valid" data-valmsg-for="Settings.SmtpHost" data-valmsg-replace="true"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="Settings_SmtpPort">@L["SmtpPort"]</label>
+                <input type="number" data-val="true" data-val-required="The SmtpPort field is required." id="Settings_SmtpPort" name="Settings.SmtpPort" value="@Model.Settings.SmtpPort" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Settings.SmtpPort" data-valmsg-replace="true"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="Settings_SmtpUserName">@L["SmtpUserName"]</label>
+                <input type="text" id="Settings_SmtpUserName" name="Settings.SmtpUserName" value="@Model.Settings.SmtpUserName" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Settings.SmtpUserName" data-valmsg-replace="true"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="Settings_SmtpPassword">@L["SmtpPassword"]</label>
+                <input type="text" id="Settings_SmtpPassword" name="Settings.SmtpPassword" value="@Model.Settings.SmtpPassword" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Settings.SmtpPassword" data-valmsg-replace="true"></span>
+            </div>
+            <div class="custom-checkbox custom-control mb-2 form-check">
+                <input type="checkbox" checked="checked" data-val="true" data-val-required="The SmtpEnableSsl field is required." id="Settings_SmtpEnableSsl" name="Settings.SmtpEnableSsl" @(Model.Settings.SmtpEnableSsl ? "checked" : "") class="form-check-input ">
+                <label class="form-check-label" for="Settings_SmtpEnableSsl">@L["SmtpEnableSsl"]</label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="Settings_DefaultFromDisplayName">@L["DefaultTitle"]</label>
+                <input type="text" id="Settings_DefaultFromDisplayName" name="Settings.DefaultFromDisplayName" value="@Model.Settings.DefaultFromDisplayName" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Settings.DefaultFromDisplayName" data-valmsg-replace="true"></span>
+            </div>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </form>
 </abp-modal>

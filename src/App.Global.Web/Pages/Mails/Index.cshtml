@@ -4,6 +4,10 @@
 @model App.Global.Web.Pages.Mails.IndexModel
 @inject IStringLocalizer<GlobalResource> L
 
+@section styles{
+<abp-style src="/styles/emails/Index.css" />
+}
+
 @section scripts
 {
 <abp-script src="/scripts/emails/Index.js" />
@@ -18,7 +22,7 @@
                             <abp-card-title>@L["sericeSendMail"]</abp-card-title>
                         </abp-column>
                         <abp-column size="_8">
-                            <input name="filter" class="filter form-control" placeholder="Filter..."/>
+                            <input name="filter" class="filter form-control" placeholder="Filter..." />
                         </abp-column>
                     </abp-row>
                 </div>

@@ -60,17 +60,5 @@ namespace App.Global.Commons.Handlers
                 .ToArray());
             return normalString.Replace(" ", String.Empty);
         }
-
-        /*public static string GetFilePath(string fileName, string tenantName, string folderContent)
-        {
-            if (fileName.ToLower().Contains("user-content"))
-                return fileName.Replace("user-content/", String.Empty);
-
-            if (string.IsNullOrWhiteSpace(tenantName))
-                tenantName = "default";
-            if (string.IsNullOrWhiteSpace(folderContent))
-                folderContent = "default";
-            return Path.Combine(folderContent, tenantName, fileName);
-        }*/
     }
 }

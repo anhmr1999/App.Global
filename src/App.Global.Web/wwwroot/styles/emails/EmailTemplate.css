@@ -1,22 +1,22 @@
-﻿.template-form::-webkit-scrollbar, #defaultTemplate::-webkit-scrollbar {
+﻿.template-form::-webkit-scrollbar, #defaultTemplate::-webkit-scrollbar, #params::-webkit-scrollbar {
     width: 5px;
     height: 0;
 }
 
 /* Track */
-.template-form::-webkit-scrollbar-track, #defaultTemplate::-webkit-scrollbar-track {
+.template-form::-webkit-scrollbar-track, #defaultTemplate::-webkit-scrollbar-track, #params::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
 }
 
 /* Handle */
-.template-form::-webkit-scrollbar-thumb, #defaultTemplate::-webkit-scrollbar-thumb {
+.template-form::-webkit-scrollbar-thumb, #defaultTemplate::-webkit-scrollbar-thumb, #params::-webkit-scrollbar-thumb {
     background: red;
     border-radius: 10px;
 }
 
     /* Handle on hover */
-    .template-form::-webkit-scrollbar-thumb:hover, #defaultTemplate::-webkit-scrollbar-thumb:hover {
+    .template-form::-webkit-scrollbar-thumb:hover, #defaultTemplate::-webkit-scrollbar-thumb:hover, #params::-webkit-scrollbar-thumb:hover {
         background: #b30000;
     }
 
@@ -79,9 +79,31 @@
                 padding: 10px 0;
             }
 
+label {
+    padding-top: 5px;
+}
+
 #defaultTemplate {
     border: 1px solid;
-    min-height: 200px;
-    max-height: 400px;
+    min-height: 300px;
+    max-height: 300px;
     overflow-y: auto;
 }
+
+#params {
+    max-height: 135px;
+    overflow-y: auto;
+}
+
+    #params div.param {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    #params i.remove-param {
+        color: red;
+        position: absolute;
+        top: 10px;
+        right: 1rem;
+        cursor: pointer;
+    }

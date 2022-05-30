@@ -1,0 +1,61 @@
+﻿@page
+@using App.Global.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model App.Global.Web.Pages.Mails.EmailModalModel
+@inject IStringLocalizer<GlobalResource> L
+@{
+    Layout = null;
+}
+
+<abp-modal size="ExtraLarge">
+    <abp-modal-header title="@L["viewEmail"]"></abp-modal-header>
+    <abp-modal-body>
+        <div class="container">
+            <abp-row>
+                <abp-column size="_3" class="email-infor">
+                    @if(Model.Email.SystemEmail){
+                        <p class="status done" style="width: 80%;padding: 5px 0;">@L["systemEmail"]</p>
+                    } else
+                    {
+                        <p>@L["createUserName"] : @Model.Email.CreateUserName</p>
+                    }
+                    <p>
+                        <label>@L["receiverEmail"] : </label>
+                        <span>@Model.Email.ReceiverEmail</span>
+                    </p>
+                    <p>
+                        <label>@L["status"] :</label>
+                        <span>
+                            @if(Model.Email.Status == 0){
+                                <span class="status created"> @L["created"] </span>
+                            } else if(Model.Email.Status == 1){
+                                <span class="status processing"> @L["processing"] </span>
+                            } else if(Model.Email.Status == 2){
+                                <span class="status done"> @L["done"] </span>
+                            } else if(Model.Email.Status == 3){
+                                <span class="status fail"> @L["fail"] </span>
+                            } else if(Model.Email.Status == 4){
+                                <span class="status reSended"> @L["reSended"] </span>
+                            } else {}
+                        </span>
+                    </p>
+                    <p>
+                        <label>@L["numberOfTimeSend"] : </label>
+                        <span>@Model.Email.NumberOfTimeSend</span>
+                    </p>
+                </abp-column>
+                <abp-column size="_9">
+                    @if(@Model.Email.TemplateDto != null){
+                        <h3>@Model.Email.TemplateDto.DefaultTitle</h3>
+                    }
+                    
+                    <div class="email-content">
+                        @Html.Raw(@Model.Email.Content)
+                    </div>
+                </abp-column>
+            </abp-row>
+        </div>
+    </abp-modal-body>
+    <abp-modal-footer buttons="@(AbpModalButtons.Close)"></abp-modal-footer>
+</abp-modal>

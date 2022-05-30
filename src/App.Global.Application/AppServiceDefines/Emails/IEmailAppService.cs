@@ -15,5 +15,6 @@ namespace App.Global.AppServiceDefines.Emails
         Task<PagedResultDto<Service_SendMailDto>> GetListAsync(GenericFilterInput input);
         Task<Service_SendMailDto> GetAsync(Guid id);
         Task<IActionResult> CreateAsync(Service_SendMailDto input);
+        Task<IActionResult> ReSendAsync(Guid id);
     }
 }

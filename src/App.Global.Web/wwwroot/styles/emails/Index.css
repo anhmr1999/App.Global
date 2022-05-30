@@ -1,0 +1,52 @@
+﻿.timeofsend {
+    position: absolute;
+    display: block;
+    bottom: -5px;
+    right: -12px;
+    padding: 0 5px;
+    background: #FF0000;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+}
+
+.status{
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 600;
+}
+    .status.created {
+        background: #f1fe9b;
+        border: .5px solid;
+    }
+    .status.processing {
+        background: #7d87f9;
+        color: #FFF;
+    }
+    .status.done {
+        background: #198754;
+        color: #FFF;
+    }
+    .status.fail {
+        background: #FF0000;
+        color: #FFF;
+    }
+    .status.reSended {
+        background: #ff6500;
+        color: #FFF;
+    }
+
+.email-infor p span{
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.email-content {
+    padding: 10px;
+    border: 0.5px solid;
+    border-radius: 3px;
+    height: 100%;
+}

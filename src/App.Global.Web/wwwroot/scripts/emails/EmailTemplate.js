@@ -104,6 +104,16 @@
         $('input[name=isActive]').prop('checked', true);
         $('input[name=allowChange]').prop('checked', true);
         _editor.setData('');
+        $.each($('#params').find('div.param'), function (i, item) {
+            $(this).remove();
+        });
+    }
+    function getExtraProperties() {
+        var result = {};
+        $.each($('#params').find('input.param'), function (i, item) {
+            result[$(item).val()] = '' ;
+        });
+        return result;
     }
 
     $('#createButton').click(function (e) {
@@ -121,12 +131,14 @@
         template.isActive = $('input[name=isActive]').is(":checked");
         template.allowChange = $('input[name=allowChange]').is(":checked");
         template.defaultTemplate = _editor.getData();
+        template.extraProperties = getExtraProperties();
         console.log(template);
         if (template.id == '')
         {
             template.id = null;
             app.global.appServices.emails.emailTemplate.create(template).done(function (res) {
                 reloadTable();
+                abp.notify.success('Create new template successfully!');
             }).always(function () {
                 hideForm();
                 abp.ui.clearBusy();
@@ -135,6 +147,7 @@
         else
             app.global.appServices.emails.emailTemplate.update(template).done(function (res) {
                 reloadTable();
+                abp.notify.success('Template update successful!');
             }).always(function () {
                 hideForm();
                 abp.ui.clearBusy();
@@ -149,12 +162,17 @@
         $('#form-label-header').html("edit template");
         abp.ui.setBusy();
         app.global.appServices.emails.emailTemplate.get(id).done(function (res) {
+            console.log(res);
             $('input[name=id]').val(id);
             $('input[name=templateName]').val(res.templateName);
             $('input[name=defaultTitle]').val(res.defaultTitle);
             $('input[name=isActive]').prop('checked', res.isActive);
             $('input[name=allowChange]').prop('checked', res.allowChange);
             _editor.setData(res.defaultTemplate);
+            $.each(res.extraProperties, function (index, value) {
+                $('#params').append('<div class="col-md-3 param"><input type="text" value="'
+                    + index + '" class="param form-control" placeholder="Param"/><i class="fa fa-minus remove-param"></i></div>');
+            });
             showForm();
         }).always(function () {
             abp.ui.clearBusy();
@@ -174,5 +192,18 @@
     $('.filter').on('change', function () {
         reloadTable();
     });
-
+    $(document).on('click', '.addParam', function (e) {
+        e.preventDefault();
+        $('#params').append('<div class="col-md-3 param"><input type="text" class="param form-control" placeholder="Param"/><i class="fa fa-minus remove-param"></i></div>');
+    });
+    $(document).on('change', 'input.param', function () {
+        var val = $(this).val().replace(new RegExp('{', 'g'), "").replace(new RegExp('}', 'g'), "");
+        if (val != '')
+            $(this).val('{{' + val + '}}');
+        else
+            $(this).val('');
+    });
+    $(document).on('click', '.remove-param', function () {
+        $(this).parent().remove();
+    });
 });

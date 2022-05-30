@@ -3,21 +3,30 @@ using App.Global.DataTranferObjects.Emails;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Volo.Abp.SettingManagement;
 
 namespace App.Global.Web.Pages.Mails
 {
     public class ConfigModalModel : GlobalPageModel
     {
-        public ICollection<EmailConfigDto> Configs { get; set; }
-        private readonly IEmailConfigAppService _configAppService;
+        [BindProperty]
+        public EmailSettingsDto Settings { get; set; }
+        private readonly IEmailSettingsAppService _configAppService;
 
-        public ConfigModalModel(IEmailConfigAppService configAppService)
+        public ConfigModalModel(IEmailSettingsAppService configAppService)
         {
             _configAppService = configAppService;
         }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            Configs = _configAppService.GetListAsync().Result;
+            Settings = await _configAppService.GetAsync();
+        }
+
+        public async Task OnPostAsync()
+        {
+            var updateSetting = ObjectMapper.Map<EmailSettingsDto, UpdateEmailSettingsDto>(Settings);
+            await _configAppService.UpdateAsync(updateSetting);
         }
     }
 }
