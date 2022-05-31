@@ -181,13 +181,18 @@
     $(document).on('click', '.delete-template', function (e) {
         e.preventDefault();
         var id = $(this).data('id');
-        abp.ui.setBusy();
-        app.global.appServices.emails.emailTemplate.delete(id)
-            .done(function (res) {
-                abp.notify.success('Delete Template Successfully!');
-                reloadTable();
-            })
-            .always(function () { abp.ui.clearBusy(); });
+        abp.message.confirm('Are you sure to delete this template?')
+            .then(function (confirmed) {
+                if (confirmed) {
+                    abp.ui.setBusy();
+                    app.global.appServices.emails.emailTemplate.delete(id)
+                        .done(function (res) {
+                            abp.notify.success('Delete Template Successfully!');
+                            reloadTable();
+                        })
+                        .always(function () { abp.ui.clearBusy(); });
+                }
+            });
     });
     $('.filter').on('change', function () {
         reloadTable();

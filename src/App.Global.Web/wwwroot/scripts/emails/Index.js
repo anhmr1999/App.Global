@@ -117,15 +117,21 @@
     });
     $(document).on('click', '.resend', function (e) {
         e.preventDefault();
-        abp.ui.setBusy();
         var id = $(this).data('id');
-        app.global.appServices.emails.email.reSend(id)
-            .done(function (res) {
-                console.log(res);
-            })
-            .always(function () {
-                dataTable.ajax.reload();
-                abp.ui.clearBusy();
+        abp.message.confirm('Are you sure to resend this email?')
+            .then(function (confirmed) {
+                if (confirmed) {
+                    abp.ui.setBusy();
+                    app.global.appServices.emails.email.reSend(id)
+                        .done(function (res) {
+                            abp.notify.success('Resend email sucessfully!');
+                            console.log(res);
+                        })
+                        .always(function () {
+                            dataTable.ajax.reload();
+                            abp.ui.clearBusy();
+                        });
+                }
             });
     });
     $(document).on('click', '.view', function (e) {

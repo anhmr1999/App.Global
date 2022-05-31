@@ -41,7 +41,7 @@
 
 .email-infor p span{
     font-weight: 600;
-    padding-left: 10px;
+    padding: 0 10px;
 }
 
 .email-content {

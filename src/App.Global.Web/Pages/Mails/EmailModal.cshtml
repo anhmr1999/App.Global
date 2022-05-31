@@ -15,7 +15,7 @@
             <abp-row>
                 <abp-column size="_3" class="email-infor">
                     @if(Model.Email.SystemEmail){
-                        <p class="status done" style="width: 80%;padding: 5px 0;">@L["systemEmail"]</p>
+                        <p class="status processing" style="width: 80%;padding: 5px 0;">@L["systemEmail"]</p>
                     } else
                     {
                         <p>@L["createUserName"] : @Model.Email.CreateUserName</p>

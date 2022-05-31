@@ -6,6 +6,14 @@
     "Menu:Email": "Email",
     "Menu:EmailTemplate": "Email Template",
 
+    //Permission - email
+    "Permission.GlobalEmailService": "Email",
+    "Permission.GlobalEmailConfig": "Email configuration",
+    "Permission.GlobalEmailTemplate": "Email template",
+    "Permission.GlobalEmailTemplate.Create": "Create new email template",
+    "Permission.GlobalEmailTemplate.Edit": "Edit email template",
+    "Permission.GlobalEmailTemplate.Delete": "Remove email template",
+
     //Common
     "index": "STT",
     "content": "Content",
@@ -23,9 +31,13 @@
     "sericeSendMail": "Sent Email List",
     "typeEmail": "Type Email",
     "viewEmail": "View Email",
-    "allowChange": "Allow Change",
-    "allowUsing": "Allow Using",
+    "systemEmail": "System Email",
+    "receiverEmail": "Receiver",
+    "numberOfTimeSend": "Number of time send",
+    "allowChange": "Allow change",
+    "allowUsing": "Allow using",
     "receiver": "Receiver",
+    "createUserName": "Sender's name",
     "template": "Template",
     "created": "Created",
     "processing": "Processing",
