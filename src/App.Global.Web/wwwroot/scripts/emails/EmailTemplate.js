@@ -76,8 +76,12 @@
                     searchable: false,
                     sortable: false,
                     render: function (data) {
-                        return `<button data-id="` + data.id + `" class="btn btn-outline-success btn-sm change-template"><i class="fa fa-wrench"></i></button>
-                                <button data-id="` + data.id + `" class="btn btn-outline-danger btn-sm delete-template"><i class="fa fa-times"></i></button>`;
+                        var result = `<button data-id="` + data.id + `" class="btn btn-outline-primary btn-sm view-template"><i class="fa fa-eye"></i></button>`;
+                        if (abp.auth.isGranted("EmailManager.Template.Edit"))
+                            result += `<button data-id="` + data.id + `" class="btn btn-outline-success btn-sm change-template"><i class="fa fa-wrench"></i></button>`;
+                        if (abp.auth.isGranted("EmailManager.Template.Delete"))
+                            result += `<button data-id="` + data.id + `" class="btn btn-outline-danger btn-sm delete-template"><i class="fa fa-times"></i></button>`;
+                        return result;
                     }
                 }
             ]

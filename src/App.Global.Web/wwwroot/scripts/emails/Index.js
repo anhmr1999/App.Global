@@ -13,7 +13,11 @@
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(app.global.appServices.emails.email.getList,
                 function () {
-                    return { filter: $('.filter').val() };
+                    var inputfilter = { filter: $('.filter').val() };
+                    if ($('.cbxStatus').val() != '') {
+                        inputfilter.status = $('.cbxStatus').val();
+                    }
+                    return inputfilter;
                 }
             ),
             columnDefs: [
@@ -112,7 +116,7 @@
         e.preventDefault();
         configModal.open();
     });
-    $('.filter').on('change', function () {
+    $('.filter, .cbxStatus').on('change', function () {
         dataTable.ajax.reload();
     });
     $(document).on('click', '.resend', function (e) {

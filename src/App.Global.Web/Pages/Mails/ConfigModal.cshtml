@@ -11,6 +11,7 @@
    <form action="/Mails/ConfigModal" method="post">
         <abp-modal-header title="@L["emailConfig"]"></abp-modal-header>
         <abp-modal-body>
+            <input type="hidden" id="Settings_DefaultFromAddress" name="Settings.DefaultFromAddress" value="Global Application" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Settings.DefaultFromAddress" data-valmsg-replace="true"></span>
             <div class="mb-3">
                 <label class="form-label" for="Settings_SmtpHost">@L["SmtpHost"]</label>
                 <input type="text" id="Settings_SmtpHost" name="Settings.SmtpHost" value="@Model.Settings.SmtpHost" class="form-control valid" aria-invalid="false"><span class="text-danger field-validation-valid" data-valmsg-for="Settings.SmtpHost" data-valmsg-replace="true"></span>
@@ -28,7 +29,7 @@
                 <input type="text" id="Settings_SmtpPassword" name="Settings.SmtpPassword" value="@Model.Settings.SmtpPassword" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Settings.SmtpPassword" data-valmsg-replace="true"></span>
             </div>
             <div class="custom-checkbox custom-control mb-2 form-check">
-                <input type="checkbox" checked="checked" data-val="true" data-val-required="The SmtpEnableSsl field is required." id="Settings_SmtpEnableSsl" name="Settings.SmtpEnableSsl" @(Model.Settings.SmtpEnableSsl ? "checked" : "") class="form-check-input ">
+                <input type="checkbox" value="true" id="Settings_SmtpEnableSsl" name="Settings.SmtpEnableSsl" @(Model.Settings.SmtpEnableSsl ? "checked" : "") class="form-check-input ">
                 <label class="form-check-label" for="Settings_SmtpEnableSsl">@L["SmtpEnableSsl"]</label>
             </div>
             <div class="mb-3">

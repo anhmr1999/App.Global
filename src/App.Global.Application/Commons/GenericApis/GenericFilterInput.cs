@@ -8,5 +8,6 @@ namespace App.Global.Commons.GenericApis
     public class GenericFilterInput : PagedAndSortedResultRequestDto
     {
         public string Filter { get; set; }
+        public int? Status { get; set; }
     }
 }

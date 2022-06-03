@@ -3,6 +3,7 @@ using App.Global.Commons.GenericApis;
 using App.Global.Commons.Helpers;
 using App.Global.DataTranferObjects.Emails;
 using App.Global.Entitis.Emails;
+using App.Global.EventHanlderModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 
@@ -23,32 +25,32 @@ namespace App.Global.AppServices.Emails
         private readonly IRepository<Service_SendMail> _emailRepository;
         private readonly IRepository<EmailTemplate> _templateRepository;
         private readonly IdentityUserManager _userManager;
-        private readonly EmailHelper _emailHelper;
+        private readonly IBackgroundJobManager _backgroundJobManager;
 
         public EmailAppService(
             IRepository<Service_SendMail> emailRepository,
             IRepository<EmailTemplate> templateRepository,
             IdentityUserManager userManager,
-            EmailHelper emailHelper)
+            IBackgroundJobManager backgroundJobManager)
         {
             _emailRepository = emailRepository;
             _templateRepository = templateRepository;
             _userManager = userManager;
-            _emailHelper = emailHelper;
+            _backgroundJobManager = backgroundJobManager;
         }
 
         public async Task<IActionResult> CreateAsync(Service_SendMailDto input)
         {
             var email = ObjectMapper.Map<Service_SendMailDto, Service_SendMail>(input);
-            email.Status = (int)EmailStatusEnum.Processing;
+            email.Status = (int)EmailStatusEnum.Created;
             email = await _emailRepository.InsertAsync(email, true);
             await CurrentUnitOfWork.SaveChangesAsync();
-            await _emailHelper.SendMailAsync(email.Id);
+            await _backgroundJobManager.EnqueueAsync(new EmailSendingArgs() { EmailId = email.Id });
             return new OkObjectResult(new GenericActionResult()
             {
                 StatusCode = 200,
                 Success = true,
-                Message = "Send Email successfully!"
+                Message = "Email is being sent!"
             });
         }
 
@@ -74,7 +76,8 @@ namespace App.Global.AppServices.Emails
                 input.Sorting = nameof(Service_SendMail.CreationTime) + " descending";
 
             var emails = (await _emailRepository.GetQueryableAsync())
-                .WhereIf(!string.IsNullOrEmpty(input.Filter), x => x.ReceiverEmail.ToLower().Contains(input.Filter.ToLower()));
+                .WhereIf(!string.IsNullOrEmpty(input.Filter), x => x.ReceiverEmail.ToLower().Contains(input.Filter.ToLower()))
+                .WhereIf(input.Status.HasValue, x => x.Status == input.Status);
             var totalCount = emails.Count();
             var lstEmail = emails.OrderBy(input.Sorting).PageBy(input).ToList();
             var resultLst = ObjectMapper.Map<List<Service_SendMail>, List<Service_SendMailDto>>(lstEmail);
@@ -93,14 +96,14 @@ namespace App.Global.AppServices.Emails
         {
             var email = await _emailRepository.GetAsync(x => x.Id == id);
 
-            email.Status = (int)EmailStatusEnum.Processing;
+            email.Status = (int)EmailStatusEnum.ReSended;
             await CurrentUnitOfWork.SaveChangesAsync();
-            await _emailHelper.SendMailAsync(email.Id);
+            await _backgroundJobManager.EnqueueAsync(new EmailSendingArgs() { EmailId = email.Id });
             return new OkObjectResult(new GenericActionResult()
             {
                 StatusCode = 200,
                 Success = true,
-                Message = "Send Email successfully!"
+                Message = "Email is being sent!"
             });
         }
     }

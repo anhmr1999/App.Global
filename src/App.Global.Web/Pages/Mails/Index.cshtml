@@ -1,8 +1,12 @@
 ﻿@page
+@using App.Global
 @using App.Global.Localization
+@using App.Global.Permissions
 @using Microsoft.Extensions.Localization
 @model App.Global.Web.Pages.Mails.IndexModel
+@using Microsoft.AspNetCore.Authorization
 @inject IStringLocalizer<GlobalResource> L
+@inject IAuthorizationService AuthorizationService
 
 @section styles{
 <abp-style src="/styles/emails/Index.css" />
@@ -21,8 +25,27 @@
                         <abp-column size="_4">
                             <abp-card-title>@L["sericeSendMail"]</abp-card-title>
                         </abp-column>
-                        <abp-column size="_8">
-                            <input name="filter" class="filter form-control" placeholder="Filter..." />
+                        <abp-column size="_4">
+                            @if (await AuthorizationService.IsGrantedAsync("SettingManagement.Emailing"))
+                            {
+                                <input name="filter" class="filter form-control" placeholder="Filter..." />
+                            }
+                        </abp-column>
+                        <abp-column size="_4">
+                            <abp-row>
+                                <abp-column size="_5">
+                                    <label style="padding-top: 5px;">Status: </label>
+                                </abp-column>
+                                <abp-column size="_7">
+                                    <select class="form-control cbxStatus">
+                                        <option value="">All</option>
+                                        @foreach (EmailStatusEnum item in (EmailStatusEnum[])Enum.GetValues(typeof(EmailStatusEnum)))
+                                        {
+                                            <option value="@((int)item)">@item</option>
+                                        }
+                                    </select>
+                                </abp-column>
+                            </abp-row>
                         </abp-column>
                     </abp-row>
                 </div>

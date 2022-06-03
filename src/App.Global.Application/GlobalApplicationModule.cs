@@ -7,6 +7,7 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.Emailing;
+using Volo.Abp.BackgroundJobs;
 
 namespace App.Global;
 
@@ -18,7 +19,8 @@ namespace App.Global;
     typeof(AbpPermissionManagementApplicationModule),
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpFeatureManagementApplicationModule),
-    typeof(AbpSettingManagementApplicationModule)
+    typeof(AbpSettingManagementApplicationModule),
+    typeof(AbpBackgroundJobsModule)
     )]
 [DependsOn(typeof(AbpEmailingModule))]
     public class GlobalApplicationModule : AbpModule
@@ -28,6 +30,10 @@ namespace App.Global;
         Configure<AbpAutoMapperOptions>(options =>
         {
             options.AddMaps<GlobalApplicationModule>();
+        });
+        Configure<AbpBackgroundJobOptions>(options =>
+        {
+            //options.IsJobExecutionEnabled = false; //Disables job execution
         });
     }
 }

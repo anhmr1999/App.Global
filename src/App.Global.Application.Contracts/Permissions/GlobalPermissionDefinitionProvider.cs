@@ -9,16 +9,19 @@ public class GlobalPermissionDefinitionProvider : PermissionDefinitionProvider
 {
     public override void Define(IPermissionDefinitionContext context)
     {
-        var myGroup = context.AddGroup(GlobalPermissions.GroupName);
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(GlobalPermissions.MyPermission1, L("Permission:MyPermission1"));
+        //context.RemoveGroup("AbpIdentity");
+        context.RemoveGroup("AbpTenantManagement");
+        context.RemoveGroup("FeatureManagement");
 
-        var EmailServicePermission = myGroup.AddPermission(GlobalEmailService.Email, L($"Permission.GlobalEmailService"));
-        var EmailConfigPermission = myGroup.AddPermission(GlobalEmailService.Config, L($"Permission.GlobalEmailConfig"));
-        var EmailTemplatePermission = myGroup.AddPermission(GlobalEmailTemplate.Default, L("Permission.GlobalEmailTemplate"))
-            .AddChild(GlobalEmailTemplate.Create, L("Permission.GlobalEmailTemplate.Create"))
-            .AddChild(GlobalEmailTemplate.Edit, L("Permission.GlobalEmailTemplate.Edit"))
-            .AddChild(GlobalEmailTemplate.Delete, L("Permission.GlobalEmailTemplate.Delete"));
+        var myGroup = context.AddGroup(GlobalPermissions.GroupName);
+
+        //Email
+        var EMailGroup = context.AddGroup(EmailPermissions.GroupName, L($"Permission.GlobalEmailManagement"));
+        EMailGroup.AddPermission(EmailPermissions.Service_Email, L($"Permission.GlobalEmailService"));
+        var EmailTemplatePermission = EMailGroup.AddPermission(EmailPermissions.TemplateDefault, L("Permission.GlobalEmailTemplate"));
+        EmailTemplatePermission.AddChild(EmailPermissions.TemplateCreate, L("Permission.GlobalEmailTemplate.Create"));
+        EmailTemplatePermission.AddChild(EmailPermissions.TemplateEdit, L("Permission.GlobalEmailTemplate.Edit"));
+        EmailTemplatePermission.AddChild(EmailPermissions.TemplateDelete, L("Permission.GlobalEmailTemplate.Delete"));
     }
 
     private static LocalizableString L(string name)
