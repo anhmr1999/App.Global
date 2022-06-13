@@ -3,6 +3,11 @@
 
     var configModal = new abp.ModalManager(abp.appPath + 'Mails/ConfigModal');
     var viewModal = new abp.ModalManager(abp.appPath + 'Mails/EmailModal');
+    var createModal = new abp.ModalManager({
+        viewUrl : abp.appPath + 'Mails/CreateEmailModal',
+        modalClass: 'CreateEmailModal',
+        scriptUrl: '/scripts/emails/CreateEmailModal.js'
+    });
 
     var dataTable = $('#Email-Service').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -115,6 +120,10 @@
     $('#EmailConfig').on('click', function (e) {
         e.preventDefault();
         configModal.open();
+    });
+    $('#EmailCreate').on('click', function (e) {
+        e.preventDefault();
+        createModal.open();
     });
     $('.filter, .cbxStatus').on('change', function () {
         dataTable.ajax.reload();

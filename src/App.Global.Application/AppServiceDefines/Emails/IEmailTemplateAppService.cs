@@ -14,6 +14,7 @@ namespace App.Global.AppServiceDefines.Emails
     public interface IEmailTemplateAppService : IApplicationService
     {
         Task<PagedResultDto<EmailTemplateDto>> GetListAsync(GenericFilterInput input);
+        Task<List<EmailTemplateDto>> GetAllAsync();
         Task<EmailTemplateDto> GetAsync(Guid id);
         Task<IActionResult> CreateAsync(EmailTemplateDto input);
         Task<IActionResult> UpdateAsync(EmailTemplateDto input);

@@ -18,7 +18,7 @@
                         <p class="status processing" style="width: 80%;padding: 5px 0;">@L["systemEmail"]</p>
                     } else
                     {
-                        <p>@L["createUserName"] : @Model.Email.CreateUserName</p>
+                        <p>@L["createUserName"] : <span>@Model.Email.CreateUserName</span></p>
                     }
                     <p>
                         <label>@L["receiverEmail"] : </label>
@@ -45,7 +45,7 @@
                         <span>@Model.Email.NumberOfTimeSend</span>
                     </p>
                 </abp-column>
-                <abp-column size="_9">
+                <abp-column size="_9" style="height: fit-content;">
                     @if(@Model.Email.TemplateDto != null){
                         <h3>@Model.Email.TemplateDto.DefaultTitle</h3>
                     }

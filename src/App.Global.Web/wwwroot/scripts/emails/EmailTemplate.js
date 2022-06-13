@@ -1,6 +1,7 @@
 ﻿$(function () {
     var l = abp.localization.getResource('Global');
     var index = 0;
+    var viewModal = new abp.ModalManager(abp.appPath + 'Mails/EmailTemplateModal');
     let _editor;
 
     DecoupledEditor
@@ -112,12 +113,17 @@
             $(this).remove();
         });
     }
-    function getExtraProperties() {
-        var result = {};
+    function getExtraProperties(template) {
+        var data = {};
+        var success = true;
         $.each($('#params').find('input.param'), function (i, item) {
-            result[$(item).val()] = '' ;
+            data[$(item).val()] = '';
+            if (!template.includes($(item).val())) {
+                abp.notify.warn("Param " + $(item).val() + ' can\'t use in template!');
+                success = false;
+            }
         });
-        return result;
+        return { Success: success, data: data };
     }
 
     $('#createButton').click(function (e) {
@@ -135,27 +141,30 @@
         template.isActive = $('input[name=isActive]').is(":checked");
         template.allowChange = $('input[name=allowChange]').is(":checked");
         template.defaultTemplate = _editor.getData();
-        template.extraProperties = getExtraProperties();
-        console.log(template);
-        if (template.id == '')
-        {
-            template.id = null;
-            app.global.appServices.emails.emailTemplate.create(template).done(function (res) {
-                reloadTable();
-                abp.notify.success('Create new template successfully!');
-            }).always(function () {
-                hideForm();
-                abp.ui.clearBusy();
-            });
+        var extraProps = getExtraProperties(template.defaultTemplate);
+        debugger;
+        if (extraProps.Success) {
+            template.extraProperties = extraProps.data; if (template.id == '') {
+                template.id = null;
+                app.global.appServices.emails.emailTemplate.create(template).done(function (res) {
+                    reloadTable();
+                    abp.notify.success('Create new template successfully!');
+                }).always(function () {
+                    hideForm();
+                    abp.ui.clearBusy();
+                });
+            }
+            else
+                app.global.appServices.emails.emailTemplate.update(template).done(function (res) {
+                    reloadTable();
+                    abp.notify.success('Template update successful!');
+                }).always(function () {
+                    hideForm();
+                    abp.ui.clearBusy();
+                });
+        } else {
+            abp.ui.clearBusy();
         }
-        else
-            app.global.appServices.emails.emailTemplate.update(template).done(function (res) {
-                reloadTable();
-                abp.notify.success('Template update successful!');
-            }).always(function () {
-                hideForm();
-                abp.ui.clearBusy();
-            });
     });
     $('#template-form-close').on('click', function (e) {
         hideForm();
@@ -166,7 +175,6 @@
         $('#form-label-header').html("edit template");
         abp.ui.setBusy();
         app.global.appServices.emails.emailTemplate.get(id).done(function (res) {
-            console.log(res);
             $('input[name=id]').val(id);
             $('input[name=templateName]').val(res.templateName);
             $('input[name=defaultTitle]').val(res.defaultTitle);
@@ -197,6 +205,11 @@
                         .always(function () { abp.ui.clearBusy(); });
                 }
             });
+    });
+    $(document).on('click', '.view-template', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        viewModal.open({ id: id });
     });
     $('.filter').on('change', function () {
         reloadTable();

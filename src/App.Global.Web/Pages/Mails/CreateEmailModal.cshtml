@@ -1,0 +1,55 @@
+﻿@page
+@using App.Global.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model App.Global.Web.Pages.Mails.CreateEmailModalModel
+@inject IStringLocalizer<GlobalResource> L
+@{
+    Layout = null;
+}
+
+<abp-modal size="ExtraLarge">
+    <abp-modal-header title="@L["createEmail"]"></abp-modal-header>
+    <abp-modal-body>
+        <div class="container">
+            <abp-row class="form-group">
+                <abp-column size="_3"><label>Template: </label></abp-column>
+                <abp-column size="_9">
+                    <select class="form-control templateCbx">
+                        <option value="">-- Non Template --</option>
+                        @foreach(var item in Model.Templates)
+                        {
+                            <option value="@item.Id">@item.TemplateName</option>
+                        }
+                    </select>
+                </abp-column>
+            </abp-row>
+            <abp-row class="form-group">
+                <abp-column size="_3"><label>Title (<span style="color: red">*</span>): </label></abp-column>
+                <abp-column size="_9"><input class="form-control email-title" placeholder="Plese enter title" /></abp-column>
+            </abp-row>
+            <abp-row class="form-group">
+                <abp-column size="_3"><label>Email receiver(<span style="color: red">*</span>): </label></abp-column>
+                <abp-column size="_9"><input class="form-control email-receiver" placeholder="Plese enter receiver email!" /></abp-column>
+            </abp-row>
+            <abp-row class="params-content form-group" style="display: none">
+                <abp-column size="_3"><label>Params (<span style="color: red">*</span>): </label></abp-column>
+                <abp-column size="_9" class="params-site">
+                    <abp-row class="params-container">
+                    </abp-row>
+                </abp-column>
+            </abp-row>
+            <abp-row class="form-group">
+                <abp-column size="_12"><label>Email content (<span style="color: red">*</span>):</label></abp-column>
+                <abp-column size="_12" class="email-content-viewer">
+                    <div id="toolbar-container"></div>
+                    <div id="content-change"></div>
+                </abp-column>
+            </abp-row>
+        </div>
+    </abp-modal-body>
+    <abp-modal-footer buttons="@(AbpModalButtons.None)">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+        <button class="btn btn-primary" id="saveEmail" data-busy-text="Saving..." type="submit"><i class="fa fa-check"></i> <span>Save</span></button>
+    </abp-modal-footer>
+</abp-modal>

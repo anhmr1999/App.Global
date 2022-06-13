@@ -43,6 +43,13 @@ namespace App.Global.AppServices.Emails
             return new OkObjectResult(new GenericActionResult() { StatusCode = 200, Success = true});
         }
 
+        [Route("api/app/email-template/all")]
+        public async Task<List<EmailTemplateDto>> GetAllAsync()
+        {
+            var lst = await _templateRepository.GetListAsync(x => x.IsActive);
+            return ObjectMapper.Map<List<EmailTemplate>, List<EmailTemplateDto>>(lst);
+        }
+
         public async Task<EmailTemplateDto> GetAsync(Guid id)
         {
             var template = await _templateRepository.FindAsync(x => x.Id == id);

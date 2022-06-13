@@ -45,6 +45,7 @@
     "done": "Done",
     "fail": "Fail",
     "reSended": "Resending",
+    "createEmail": "Create An Email",
 
     //EmailConfig
     "SmtpHost": "Smtp Host:",

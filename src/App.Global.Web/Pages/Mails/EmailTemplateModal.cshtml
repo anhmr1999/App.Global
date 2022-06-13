@@ -1,0 +1,56 @@
+﻿@page
+@using App.Global.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model App.Global.Web.Pages.Mails.EmailTemplateModalModel
+@inject IStringLocalizer<GlobalResource> L
+@{
+    Layout = null;
+}
+
+<abp-modal size="Large">
+    <abp-modal-header title="@L["EmailTemplate"]"></abp-modal-header>
+    <abp-modal-body>
+        <abp-row>
+            <abp-column size="_12">
+                <label>Name:</label> <span style="font-size: 1.4rem"> @Model.TemplateDto.TemplateName</span>
+            </abp-column>
+            <abp-column size="_12">
+                <label>Title:</label> <span style="font-size: 1.4rem"> @Model.TemplateDto.DefaultTitle</span>
+            </abp-column>
+            <abp-column size="_12">
+                <abp-row>
+                    <abp-column size="_6">
+                        <input type="checkbox" disabled @(Model.TemplateDto.AllowChange ? "checked" : "") /> <label>Allow change</label>
+                    </abp-column>
+                    <abp-column size="_6">
+                        <input type="checkbox" disabled @(Model.TemplateDto.IsActive ? "checked" : "") /> <label>Is active</label>
+                    </abp-column>
+                </abp-row>
+            </abp-column>
+            <abp-column size="_12">
+                <abp-row>
+                    <abp-column size="_3">
+                        <label>Params:</label>
+                        <div class="view-params">
+                            @foreach (var item in Model.TemplateDto.ExtraProperties)
+                            {
+                                <div class="form-group">
+                                    - @item.Key
+                                </div>
+                            }
+                        </div>
+                    </abp-column>
+                    <abp-column size="_9">
+                        <label>Template:</label>
+                        <div class="template-viewer" style="border: 0.5px solid #4c4c4c">
+                            @Html.Raw(Model.TemplateDto.DefaultTemplate)
+                        </div>
+                    </abp-column>
+                </abp-row>
+            </abp-column>
+        </abp-row>
+
+    </abp-modal-body>
+    <abp-modal-footer buttons="@(AbpModalButtons.Cancel)"></abp-modal-footer>
+</abp-modal>

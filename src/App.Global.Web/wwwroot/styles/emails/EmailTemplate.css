@@ -1,22 +1,22 @@
-﻿.template-form::-webkit-scrollbar, #defaultTemplate::-webkit-scrollbar, #params::-webkit-scrollbar {
+﻿.template-form::-webkit-scrollbar, #defaultTemplate::-webkit-scrollbar, #params::-webkit-scrollbar, #view-params::-webkit-scrollbar, #view-template::-webkit-scrollbar {
     width: 5px;
     height: 0;
 }
 
 /* Track */
-.template-form::-webkit-scrollbar-track, #defaultTemplate::-webkit-scrollbar-track, #params::-webkit-scrollbar-track {
+.template-form::-webkit-scrollbar-track, #defaultTemplate::-webkit-scrollbar-track, #params::-webkit-scrollbar-track, #view-params::-webkit-scrollbar-track, #view-template::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
 }
 
 /* Handle */
-.template-form::-webkit-scrollbar-thumb, #defaultTemplate::-webkit-scrollbar-thumb, #params::-webkit-scrollbar-thumb {
+.template-form::-webkit-scrollbar-thumb, #defaultTemplate::-webkit-scrollbar-thumb, #params::-webkit-scrollbar-thumb, #view-params::-webkit-scrollbar-thumb, #view-template::-webkit-scrollbar-thumb {
     background: red;
     border-radius: 10px;
 }
 
     /* Handle on hover */
-    .template-form::-webkit-scrollbar-thumb:hover, #defaultTemplate::-webkit-scrollbar-thumb:hover, #params::-webkit-scrollbar-thumb:hover {
+    .template-form::-webkit-scrollbar-thumb:hover, #defaultTemplate::-webkit-scrollbar-thumb:hover, #params::-webkit-scrollbar-thumb:hover, #view-params::-webkit-scrollbar-thumb:hover, #view-template::-webkit-scrollbar-thumb:hover {
         background: #b30000;
     }
 
@@ -85,13 +85,14 @@ label {
 
 #defaultTemplate {
     border: 1px solid;
-    min-height: 300px;
-    max-height: 300px;
+    min-height: 200px;
+    max-height: 250px;
     overflow-y: auto;
 }
 
 #params {
     max-height: 135px;
+    padding: 10px 0 5px 0;
     overflow-y: auto;
 }
 
@@ -107,3 +108,12 @@ label {
         right: 1rem;
         cursor: pointer;
     }
+
+.view-params, .template-viewer {
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 200px;
+}

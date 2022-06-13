@@ -64,8 +64,7 @@ namespace App.Global.AppServices.Emails
             if (email.CreatorId.HasValue)
             {
                 var user = await _userManager.GetByIdAsync(email.CreatorId.Value);
-                if (user != null)
-                    result.CreateUserName = user.Name;
+                result.CreateUserName = user?.Name;
             }
             return result;
         }

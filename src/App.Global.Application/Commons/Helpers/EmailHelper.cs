@@ -45,8 +45,8 @@ namespace App.Global.Commons.Helpers
             };
             if (serviceMail != null)
             {
-                var subject = Settings.DefaultFromDisplayName;
-                if (serviceMail.TemplateId.HasValue)
+                var subject = serviceMail.Title;
+                if (serviceMail.TemplateId.HasValue && subject.IsNullOrWhiteSpace())
                     subject = (await _templateRepository.GetAsync(x => x.Id == EmailId)).DefaultTitle;
 
                 using (SmtpClient client = new SmtpClient(Settings.SmtpHost))
@@ -93,12 +93,11 @@ namespace App.Global.Commons.Helpers
         public async Task<string> GetEmailContent(Service_SendMail serviceMail)
         {
             var content = new StringBuilder();
-            if (!string.IsNullOrEmpty(serviceMail.Content))
-                return serviceMail.Content;
             if (!serviceMail.TemplateId.HasValue)
-                return null;
+                return serviceMail.Content;
+
             var template = await _templateRepository.GetAsync(x => x.Id == serviceMail.TemplateId);
-            content = new StringBuilder(template.DefaultTemplate);
+            content = new StringBuilder(serviceMail.Content.IsNullOrWhiteSpace() ? template.DefaultTemplate : serviceMail.Content);
             foreach (var item in serviceMail.ExtraProperties)
             {
                 content = content.Replace(item.Key, item.Value.ToString());

@@ -10,6 +10,7 @@ namespace App.Global.Entitis.Emails
     public class Service_SendMail : FullAuditedAggregateRoot<Guid>
     {
         public bool SystemEmail { get; set; }
+        public string Title { get; set; }
         public string Content { get; set; }
         public string ReceiverEmail { get; set; }
         public int NumberOfTimeSend { get; set; }
