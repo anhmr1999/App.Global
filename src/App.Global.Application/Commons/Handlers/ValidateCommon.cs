@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -59,6 +60,28 @@ namespace App.Global.Commons.Handlers
                 .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
                 .ToArray());
             return normalString.Replace(" ", String.Empty);
+        }
+
+        public static string ValidateImageFile(IFormFile file)
+        {
+            var imagesExtensions = new List<string>()
+                { ".jpg", ".png", ".svg", ".gif" };
+            var extention = Path.GetExtension(file.FileName);
+            if (!imagesExtensions.Any(x => x.Contains(extention)))
+                return "Uploaded file is incorrect!";
+            if (file.Length < GlobalConsts.imgMinSize || file.Length > GlobalConsts.imgMaxSize)
+                return "Upload files must be between 5Kb and 3Mb!";
+            return string.Empty;
+        }
+
+        public static string ValidateExcelFile(IFormFile file)
+        {
+            var extention = Path.GetExtension(file.FileName);
+            if (!extention.Contains("xls"))
+                return "Uploaded file is incorrect!";
+            if (file.Length < GlobalConsts.imgMinSize || file.Length > GlobalConsts.imgMaxSize)
+                return "Upload files must be between 5Kb and 3Mb!";
+            return string.Empty;
         }
     }
 }

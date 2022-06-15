@@ -126,4 +126,9 @@
     <None Include="wwwroot\scripts\emails\EmailTemplate.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Excels\Exports\" />
+    <Folder Include="wwwroot\Excels\Imports\" />
+  </ItemGroup>
+
 </Project>

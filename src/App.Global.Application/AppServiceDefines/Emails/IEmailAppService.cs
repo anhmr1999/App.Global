@@ -2,8 +2,6 @@
 using App.Global.DataTranferObjects.Emails;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -16,5 +14,6 @@ namespace App.Global.AppServiceDefines.Emails
         Task<Service_SendMailDto> GetAsync(Guid id);
         Task<IActionResult> CreateAsync(Service_SendMailDto input);
         Task<IActionResult> ReSendAsync(Guid id);
+        Task<IActionResult> GetExportFile(GenericFilterInput input);
     }
 }

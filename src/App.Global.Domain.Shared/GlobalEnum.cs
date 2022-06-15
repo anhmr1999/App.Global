@@ -12,4 +12,12 @@ namespace App.Global
         Fail = 3,
         ReSended = 4
     }
+
+    public enum ExcelStatusEnum
+    {
+        Created,
+        Processing,
+        Done,
+        Fail
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using App.Global.DataTranferObjects.Emails;
+using App.Global.DataTranferObjects.ExcelServices;
 using App.Global.Entitis.Emails;
+using App.Global.Entitis.ExcelServices;
 using AutoMapper;
 using Volo.Abp.SettingManagement;
 
@@ -15,11 +17,12 @@ public class GlobalApplicationAutoMapperProfile : Profile
 
         CreateMap<EmailSettingsDto, UpdateEmailSettingsDto>();
 
-        CreateMap<EmailConfig, EmailConfigDto>();
-        CreateMap<EmailConfigDto, EmailConfig>();
         CreateMap<EmailTemplate, EmailTemplateDto>();
         CreateMap<EmailTemplateDto, EmailTemplate>();
+
         CreateMap<Service_SendMail, Service_SendMailDto>();
         CreateMap<Service_SendMailDto, Service_SendMail>();
+
+        CreateMap<ExcelService, ExcelServiceDto>();
     }
 }

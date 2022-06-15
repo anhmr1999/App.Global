@@ -31,6 +31,14 @@ namespace App.Global.Commons.Helpers
             return filePath;
         }
 
+        public async Task SaveFileAsync(Stream stream, string filePath)
+        {
+            using (var file = new FileStream(Path.Combine(_webHostEnvironment.WebRootPath, filePath), FileMode.Create))
+            {
+                await stream.CopyToAsync(file);
+            }
+        }
+
         public async Task DeleteFileAsync(string filePath)
         {
             if (File.Exists(filePath))
@@ -54,18 +62,6 @@ namespace App.Global.Commons.Helpers
             if (string.IsNullOrWhiteSpace(folderContent))
                 folderContent = "default";
             return Path.Combine(folderContent, $"{Guid.NewGuid()}-{fileName}");
-        }
-
-        public static string CheckFileImage(IFormFile file)
-        {
-            var imagesExtensions = new List<string>()
-                { ".jpg", ".png", ".svg", ".gif" };
-            var extention = Path.GetExtension(file.FileName);
-            if (!imagesExtensions.Any(x => x.Contains(extention)))
-                return "Uploaded file is incorrect!";
-            if (file.Length < GlobalConsts.imgMinSize || file.Length > GlobalConsts.imgMaxSize)
-                return "Upload files must be between 5Kb and 3Mb!";
-            return string.Empty;
         }
     }
 }

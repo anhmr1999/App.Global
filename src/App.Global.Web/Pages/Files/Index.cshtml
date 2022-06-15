@@ -1,0 +1,42 @@
+﻿@page
+@using App.Global
+@using App.Global.Localization
+@using App.Global.Permissions
+@using Microsoft.Extensions.Localization
+@model App.Global.Web.Pages.Files.IndexModel
+@using Microsoft.AspNetCore.Authorization
+@inject IStringLocalizer<GlobalResource> L
+@inject IAuthorizationService AuthorizationService
+
+@section styles{
+}
+
+@section scripts
+{
+}
+<abp-card>
+    <abp-card-header><h3>FileUploadandDownload</h3></abp-card-header>
+    <abp-card-body>
+        <abp-row>
+            <abp-column>
+                <h3>UploadFile</h3>
+                <hr />
+                <form method="post" enctype="multipart/form-data">
+                    <abp-input asp-for="FileDto.File"></abp-input>
+                    <input type="submit" class="btn btn-info" />
+                </form>
+            </abp-column>
+            <abp-column style="border-left: 1px dotted gray">
+                <h3>DownloadFile</h3>
+                <hr />
+                <form id="DownloadFile">
+                    <div class="form-group">
+                        <label for="fileName">Filename</label><span>*</span>
+                        <input type="text" id="fileName" name="fileName" class="form-control ">
+                    </div>
+                    <input type="submit" class="btn btn-info" />
+                </form>
+            </abp-column>
+        </abp-row>
+    </abp-card-body>
+</abp-card>

@@ -92,12 +92,10 @@ namespace App.Global.Commons.Helpers
 
         public async Task<string> GetEmailContent(Service_SendMail serviceMail)
         {
-            var content = new StringBuilder();
-            if (!serviceMail.TemplateId.HasValue)
-                return serviceMail.Content;
+            var content = serviceMail.Content;
+            if (string.IsNullOrEmpty(content) && serviceMail.TemplateId.HasValue)
+                content = (await _templateRepository.GetAsync(x => x.Id == serviceMail.TemplateId)).DefaultTemplate;
 
-            var template = await _templateRepository.GetAsync(x => x.Id == serviceMail.TemplateId);
-            content = new StringBuilder(serviceMail.Content.IsNullOrWhiteSpace() ? template.DefaultTemplate : serviceMail.Content);
             foreach (var item in serviceMail.ExtraProperties)
             {
                 content = content.Replace(item.Key, item.Value.ToString());

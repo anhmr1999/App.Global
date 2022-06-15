@@ -121,6 +121,10 @@
         e.preventDefault();
         configModal.open();
     });
+    $('#Download').on('click', function (e) {
+        e.preventDefault();
+        configModal.open();
+    });
     $('#EmailCreate').on('click', function (e) {
         e.preventDefault();
         createModal.open();

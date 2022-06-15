@@ -1,4 +1,5 @@
 ﻿using App.Global.Entitis.Emails;
+using App.Global.Entitis.ExcelServices;
 using App.Global.Entitis.Organizations;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -54,9 +55,9 @@ public class GlobalDbContext :
     public DbSet<Province> Provinces { get; set; }
     public DbSet<District> Districts { get; set; }
     public DbSet<Commune> Communes { get; set; }
-    public DbSet<EmailConfig> EmailConfigs { get; set; }
     public DbSet<EmailTemplate> EmailTemplates { get; set; }
     public DbSet<Service_SendMail> Service_SendMail { get; set; }
+    public DbSet<ExcelService> ExcelServices { get; set; }
     #endregion
 
     public GlobalDbContext(DbContextOptions<GlobalDbContext> options)
@@ -92,7 +93,7 @@ public class GlobalDbContext :
         builder.Entity<District>(b => { b.ToTable(GlobalConsts.DbTablePrefix + "Districts", GlobalConsts.DbSchema); });
         builder.Entity<Commune>(b => { b.ToTable(GlobalConsts.DbTablePrefix + "Communes", GlobalConsts.DbSchema); });
         builder.Entity<EmailTemplate>(b => { b.ToTable(GlobalConsts.DbTablePrefix + "EmailTemplates", GlobalConsts.DbSchema); });
-        builder.Entity<EmailConfig>(b => { b.ToTable(GlobalConsts.DbTablePrefix + "EmailConfigs", GlobalConsts.DbSchema); });
         builder.Entity<Service_SendMail>(b => { b.ToTable(GlobalConsts.DbTablePrefix + "Service_SendMails", GlobalConsts.DbSchema); });
+        builder.Entity<ExcelService>(b => { b.ToTable(GlobalConsts.DbTablePrefix + "ExcelServices", GlobalConsts.DbSchema); });
     }
 }

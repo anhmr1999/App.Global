@@ -51,9 +51,10 @@
             <abp-column size-md="_4" class="text-end">
                 @if (await AuthorizationService.IsGrantedAsync("SettingManagement.Emailing"))
                 {
-                    <abp-button id="EmailConfig" text="@L["emailConfig"]" icon="wrench" button-type="Outline_Primary" />
+                    <abp-button id="EmailConfig" text="@L["emailConfig"]" icon="wrench" button-type="Outline_Warning" />
                 }
                 <abp-button id="EmailCreate" text="Create new" icon="wrench" button-type="Outline_Primary" />
+                <abp-button id="Download" text="Export excel" icon="wrench" button-type="Outline_Success" />
             </abp-column>
         </abp-row>
     </abp-card-header>

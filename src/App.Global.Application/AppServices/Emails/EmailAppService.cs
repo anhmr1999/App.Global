@@ -3,14 +3,16 @@ using App.Global.Commons.GenericApis;
 using App.Global.Commons.Helpers;
 using App.Global.DataTranferObjects.Emails;
 using App.Global.Entitis.Emails;
+using App.Global.Entitis.ExcelServices;
 using App.Global.EventHanlderModels;
+using App.Global.ExcelModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.BackgroundJobs;
@@ -24,17 +26,20 @@ namespace App.Global.AppServices.Emails
     {
         private readonly IRepository<Service_SendMail> _emailRepository;
         private readonly IRepository<EmailTemplate> _templateRepository;
+        private readonly IRepository<ExcelService> _excelRepository;
         private readonly IdentityUserManager _userManager;
         private readonly IBackgroundJobManager _backgroundJobManager;
 
         public EmailAppService(
             IRepository<Service_SendMail> emailRepository,
             IRepository<EmailTemplate> templateRepository,
+            IRepository<ExcelService> excelRepository,
             IdentityUserManager userManager,
             IBackgroundJobManager backgroundJobManager)
         {
             _emailRepository = emailRepository;
             _templateRepository = templateRepository;
+            _excelRepository = excelRepository;
             _userManager = userManager;
             _backgroundJobManager = backgroundJobManager;
         }
@@ -51,6 +56,34 @@ namespace App.Global.AppServices.Emails
                 StatusCode = 200,
                 Success = true,
                 Message = "Email is being sent!"
+            });
+        }
+
+        public async Task<IActionResult> GetExportFile(GenericFilterInput input)
+        {
+            var fileName = $"EmailEportFile_{DateTime.Now.ToString("yyyyMMdd")}.xlsx";
+            var excelService = new ExcelService()
+            {
+                Status = ExcelStatusEnum.Created,
+                ExportFile = true,
+                FileName = fileName,
+                FilePath = $"Excels/Exports/{fileName}"
+            };
+            excelService = await _excelRepository.InsertAsync(excelService, true);
+
+            var backgroundJobArg = new ExcelExportArgs()
+            {
+                ExcelId = excelService.Id,
+                Filter = input.Filter,
+                Status = input.Status,
+                Headers = typeof(EmailExport).GetProperties().Select(x => L[x.Name].ToString()).ToArray()
+            };
+            await _backgroundJobManager.EnqueueAsync(backgroundJobArg);
+            return new OkObjectResult(new GenericActionResult()
+            {
+                StatusCode = 200,
+                Success = true,
+                Message = "Your file is processing!"
             });
         }
 
